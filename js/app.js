@@ -5,7 +5,7 @@ var app = {
     app.player = {
       x: 0,
       y: 0,
-      direction: "right",
+      direction: ["right", "left", "up", "down"],
     };
     app.targetCell = {
       x: 5,
@@ -31,9 +31,8 @@ var app = {
       let laCase = cells[index];
       if (laCase = cells[(app.targetCell.y + 1) * (app.targetCell.x + 1) - 1]) {
         laCase.classList.add("targetCell");
-      }
-      else if (laCase = cells[(app.player.y + 1) * (app.player.x + 1) - 1]){
-        let divPlayer=document.createElement("div");
+      } else if (laCase = cells[(app.player.y + 1) * (app.player.x + 1) - 1]) {
+        let divPlayer = document.createElement("div");
         divPlayer.classList.add("player");
         laCase.appendChild(divPlayer);
       }
@@ -47,8 +46,16 @@ var app = {
     app.clearBoard();
     app.drawBoard();
   },
-  
-
+  turnLeft: () => {
+    app.player.direction[1];
+    app.player.x--;
+    app.redrawBoard();
+  },
+  turnRight: () => {
+    app.player.direction[0];
+    app.player.x++;
+    app.redrawBoard();
+  }
 
 };
 
