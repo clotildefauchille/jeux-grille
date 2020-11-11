@@ -27,6 +27,8 @@ body {
   background-color: white;
   border: 1px solid black;
   padding: 2em;
+  min-width:70px;
+  min-height: 70px;
 }
 .targetCell{
   background-color: chartreuse;
