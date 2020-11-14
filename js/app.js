@@ -10,7 +10,9 @@ var app = {
       x: 5,
       y: 3,
     };
-
+    app.listenKeyboardEvents();
+    app.directionRight = app.player.direction[0];
+    app.directionLeft=app.player.direction[1];
     app.directionUp = app.player.direction[2];
     app.directionDown = app.player.direction[3];
     app.drawBoard(app.directionDown);
@@ -27,26 +29,32 @@ var app = {
         var cellule = document.createElement("div");
         cellule.className = "cell";
         row.appendChild(cellule);
-      }
-      let cells = document.querySelectorAll(".cell");
-      let laCase = cells[index];
-      if (
-        (laCase = cells[(app.targetCell.y + 1) * (app.targetCell.x + 1) - 1])
-      ) {
-        laCase.classList.add("targetCell");
-      } else if (
-        (laCase = cells[(app.player.y + 1) * (app.player.x + 1) - 1])
-      ) {
-        app.divPlayer = document.createElement("div");
-        app.divPlayer.classList.add("player");
-        laCase.appendChild(app.divPlayer);
+        let indexDeLaCase = index * (COLUMNS - 1) + (index + 1 * index2 + 1);
+        if (
+          indexDeLaCase ===
+          (app.targetCell.y + 1) * (app.targetCell.x + 1) 
+        ) {
+          cellule.classList.add("targetCell");
+        } else if (
+          indexDeLaCase ===
+          (app.player.y + 1) * (app.player.x + 1) 
+        ) {
+          app.divPlayer = document.createElement("div");
+          app.divPlayer.classList.add("player");
+          cellule.appendChild(app.divPlayer);
 
-        if (direction === app.directionUp) {
-          app.divPlayer.classList.add("player-up");
-        } else if (direction === app.directionDown) {
-          app.divPlayer.classList.add("player-down");
+          if (direction === app.directionUp) {
+            app.divPlayer.classList.add("player-up");
+          } else if (direction === app.directionDown) {
+            app.divPlayer.classList.add("player-down");
+          }
+          else if (direction === app.directionLeft) {
+            app.divPlayer.classList.add("player-left");
+          }
         }
       }
+      // app.cells = document.querySelectorAll(".cell");
+      // app.laCase = app.cells[index];
     }
   },
   clearBoard: function () {
@@ -67,9 +75,29 @@ var app = {
     app.player.x++;
     app.redrawBoard(direction);
   },
-  moveFoward: () => {
-    y++;
-    app.redrawBoard();
+  moveFoward: (direction) => {
+    if (direction === app.directionUp) {
+      app.player.y--;
+    } else if (direction === app.directionDown) {
+      app.player.y++;
+    }
+    app.redrawBoard(direction);
+  },
+  listenKeyboardEvents: () => {
+    document.addEventListener("keyup", function (evt) {
+      if (evt.keyCode === 39) {
+        app.turnRight(app.directionRight);
+      }
+      else if (evt.keyCode===37){
+        app.turnLeft(app.directionLeft)
+      }
+      else if (evt.keyCode===40){
+        app.moveFoward(app.directionDown)
+      }
+      else if (evt.keyCode === 38) {
+        app.moveFoward(app.directionUp)
+      }
+    });
   },
 };
 
