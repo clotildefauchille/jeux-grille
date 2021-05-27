@@ -1,12 +1,12 @@
 var app = {
-  init: function () {
-    
+  init: () => {
+
     app.board = document.querySelector("#board");
     app.player = {
       x: 0,
       y: 0,
       direction: ["right", "left", "up", "down"],
-      gameOver:false
+      gameOver: false,
     };
     app.targetCell = {
       x: 5,
@@ -20,7 +20,7 @@ var app = {
     app.directionDown = app.player.direction[3];
     app.drawBoard(app.directionDown);
   },
-  drawBoard: function (direction) {
+  drawBoard: (direction) => {
     var ROWS = app.targetCell.y + 1;
     var COLUMNS = app.targetCell.x + 1;
     for (let index = 0; index < ROWS; index++) {
@@ -35,7 +35,7 @@ var app = {
 
         if (app.targetCell.y === index && (app.targetCell.x === index2)) {
           cellule.classList.add("targetCell");
-        } 
+        }
         if (app.player.x === index2 && app.player.y === index) {
           app.divPlayer = document.createElement("div");
           app.divPlayer.classList.add("player");
@@ -51,6 +51,7 @@ var app = {
         }
       }
     }
+    app.isGameOver();
   },
   clearBoard: function () {
     app.board.textContent = "";
@@ -64,10 +65,11 @@ var app = {
       app.player.x--;
       app.redrawBoard(direction);
     }
-    else if(app.gameOver===true){
+    if ( app.player.gameOver === true) {
+      console.log('helloleft')
+       
 
     }
-
   },
   turnRight: (direction) => {
 
@@ -75,9 +77,11 @@ var app = {
       app.player.x++;
       app.redrawBoard(direction);
     }
-else if (app.gameOver === true) {
+    if (app.player.gameOver === true) {
+      console.log('helloright')
+       
 
-}
+    }
 
   },
   moveFoward: (direction) => {
@@ -85,21 +89,23 @@ else if (app.gameOver === true) {
       if (1 <= app.player.y && app.player.y <= 3) {
         app.player.y--
       };
-
-
-    } else if (direction === app.directionDown) {
+      app.redrawBoard(direction);
+    } 
+   if (direction === app.directionDown) {
       if (0 <= app.player.y && app.player.y <= 2) {
         app.player.y++
       }
-      else if (app.gameOver === true) {
-
-      }
-    }
     app.redrawBoard(direction);
-    
+     }
+    if (app.player.gameOver === true) {
+      console.log('hellomove')
+      
+      
+    }
+
   },
   listenKeyboardEvents: () => {
-    document.addEventListener("keyup", function (evt) {
+    document.addEventListener("keyup", (evt) => {
       if (evt.keyCode === 39) {
         app.turnRight(app.directionRight);
       } else if (evt.keyCode === 37) {
@@ -111,12 +117,13 @@ else if (app.gameOver === true) {
       }
     });
   },
-isGameOver:()=>{
-  if (app.player.x===app.targetCell.x&&(app.player.y===app.targetCell.y)){
-alert ("game is over!!");
-app.player.isGameOver===true;
+  isGameOver: () => {
+    if (app.player.x === app.targetCell.x && (app.player.y === app.targetCell.y)) {
+      app.player.gameOver = true;
+      alert("game is over!!");
+      console.log("app.player.gameOver", app.player.gameOver)
+    }
   }
-}
 };
 
 document.addEventListener("DOMContentLoaded", app.init);
