@@ -14,6 +14,7 @@ var app = {
     };
 
     app.listenKeyboardEvents();
+    app.listenButtonClick();
     app.directionRight = app.player.direction[0];
     app.directionLeft = app.player.direction[1];
     app.directionUp = app.player.direction[2];
@@ -48,6 +49,9 @@ var app = {
           } else if (direction === app.directionLeft) {
             app.divPlayer.classList.add("player-left");
           }
+          else if (direction === app.directionRight) {
+            app.divPlayer.classList.add("player-right")
+          }
         }
       }
     }
@@ -61,48 +65,44 @@ var app = {
     app.drawBoard(direction);
   },
   turnLeft: (direction) => {
-    if (1 <= app.player.x && app.player.x <= 5) {
+    
+    if (1 <= app.player.x && app.player.x <= 5 && app.player.gameOver===false) {
       app.player.x--;
       app.redrawBoard(direction);
     }
-    if ( app.player.gameOver === true) {
+    else {
       console.log('helloleft')
-       
-
     }
   },
   turnRight: (direction) => {
-
-    if (0 <= app.player.x && app.player.x <= 4) {
-      app.player.x++;
-      app.redrawBoard(direction);
-    }
-    if (app.player.gameOver === true) {
+    
+    if (0 <= app.player.x && app.player.x <= 4 && app.player.gameOver === false) {
+        app.player.x++;
+        app.redrawBoard(direction);
+      }
+    
+    
+    else {
       console.log('helloright')
-       
-
     }
 
   },
   moveFoward: (direction) => {
-    if (direction === app.directionUp) {
-      if (1 <= app.player.y && app.player.y <= 3) {
+    if (direction === app.directionUp && app.player.gameOver == false){
+      if (1 <= app.player.y && app.player.y <= 3 ) {
         app.player.y--
       };
       app.redrawBoard(direction);
     } 
-   if (direction === app.directionDown) {
-      if (0 <= app.player.y && app.player.y <= 2) {
+    else if (direction === app.directionDown && app.player.gameOver == false) {
+     if (0 <= app.player.y && app.player.y <= 2 ) {
         app.player.y++
       }
     app.redrawBoard(direction);
      }
-    if (app.player.gameOver === true) {
-      console.log('hellomove')
-      
-      
+    else {
+      console.log('hellomove') 
     }
-
   },
   listenKeyboardEvents: () => {
     document.addEventListener("keyup", (evt) => {
@@ -117,11 +117,22 @@ var app = {
       }
     });
   },
+  replay:()=>{
+    app.player.gameOver = false ;
+    app.player.x = 0;
+    app.player.y = 0;
+  },
+  listenButtonClick: () => {
+    document.addEventListener('click', (evt) => {
+      app.replay();
+    }) 
+  },
   isGameOver: () => {
-    if (app.player.x === app.targetCell.x && (app.player.y === app.targetCell.y)) {
+    if (app.player.x == app.targetCell.x && (app.player.y == app.targetCell.y)) {
       app.player.gameOver = true;
       alert("game is over!!");
       console.log("app.player.gameOver", app.player.gameOver)
+      app.divPlayer.classList.add("gameOver");
     }
   }
 };

@@ -3,7 +3,7 @@ body {
 }
 
 .player {
-      background-image: url(../img/sprite.png);
+    background-image: url(../img/sprite.png);
     width: 29px;
     height: 33px;
     /* border-style: solid; */
@@ -17,11 +17,17 @@ body {
  background-position-y: -32px;
   /* transform: rotate(180deg); */
 }
+.player-right{
+  background-position-y: 64px;
+}
 .player-up{
   /* transform: rotate(-90deg); */
 }
 .player-down{
-  transform: rotate(90deg);
+  /* transform: rotate(90deg); */
+}
+.gameOver{
+  background-position-y: 32px;
 }
 #board {
   display: flex;
