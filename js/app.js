@@ -7,6 +7,7 @@ var app = {
       y: 0,
       direction: ["right", "left", "up", "down"],
       gameOver: false,
+      counter:0,
     };
     app.targetCell = {
       x: 5,
@@ -68,22 +69,26 @@ var app = {
     
     if (1 <= app.player.x && app.player.x <= 5 && app.player.gameOver===false) {
       app.player.x--;
+      app.player.counter++;
+      // console.log('app.counter', app.player.counter)
       app.redrawBoard(direction);
     }
     else {
-      console.log('helloleft')
+      // console.log('helloleft')
     }
   },
   turnRight: (direction) => {
     
     if (0 <= app.player.x && app.player.x <= 4 && app.player.gameOver === false) {
         app.player.x++;
+        app.player.counter++;
+      // console.log('app.counter', app.player.counter)
         app.redrawBoard(direction);
       }
     
     
     else {
-      console.log('helloright')
+      // console.log('helloright')
     }
 
   },
@@ -91,21 +96,25 @@ var app = {
     if (direction === app.directionUp && app.player.gameOver == false){
       if (1 <= app.player.y && app.player.y <= 3 ) {
         app.player.y--
+        app.player.counter++;
+        // console.log('app.counter', app.player.counter)
       };
       app.redrawBoard(direction);
     } 
     else if (direction === app.directionDown && app.player.gameOver == false) {
      if (0 <= app.player.y && app.player.y <= 2 ) {
         app.player.y++
+       app.player.counter++;
+      //  console.log('app.counter', app.player.counter)
       }
     app.redrawBoard(direction);
      }
     else {
-      console.log('hellomove') 
+      // console.log('hellomove') 
     }
   },
   listenKeyboardEvents: () => {
-    document.addEventListener("keyup", (evt) => {
+    document.addEventListener('keydown', (evt) => {
       if (evt.keyCode === 39) {
         app.turnRight(app.directionRight);
       } else if (evt.keyCode === 37) {
@@ -118,9 +127,13 @@ var app = {
     });
   },
   replay:()=>{
-    app.player.gameOver = false ;
-    app.player.x = 0;
-    app.player.y = 0;
+    app.player = {
+      x: 0,
+      y: 0,
+      gameOver: false,
+      counter: 0,
+    };
+    app.redrawBoard(app.directionDown);
   },
   listenButtonClick: () => {
     document.addEventListener('click', (evt) => {
@@ -130,8 +143,8 @@ var app = {
   isGameOver: () => {
     if (app.player.x == app.targetCell.x && (app.player.y == app.targetCell.y)) {
       app.player.gameOver = true;
-      alert("game is over!!");
-      console.log("app.player.gameOver", app.player.gameOver)
+      alert(`game is over!! tu t'es déplacé en ${app.player.counter} coups`);
+      // console.log("app.player.gameOver", app.player.gameOver)
       app.divPlayer.classList.add("gameOver");
     }
   }

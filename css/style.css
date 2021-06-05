@@ -52,3 +52,14 @@ body {
 .targetCell{
   background-color: chartreuse;
 }
+.replay-btn{
+  padding: 1rem 2.5rem;
+  background-color: white;
+  font-weight: bold;
+  font-size: 1.6rem;
+  margin: 2rem 0 0 8rem;
+}
+
+.replay-btn:hover {
+    background-color:chartreuse;
+  }
