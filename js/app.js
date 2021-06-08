@@ -10,8 +10,8 @@ var app = {
       counter:0,
     };
     app.targetCell = {
-      x: 5,
-      y: 3,
+      x: Math.floor(Math.random() * 5)+1,
+      y: Math.floor(Math.random() * 3)+1,
     };
 
     app.listenKeyboardEvents();
@@ -23,8 +23,8 @@ var app = {
     app.drawBoard(app.directionDown);
   },
   drawBoard: (direction) => {
-    var ROWS = app.targetCell.y + 1;
-    var COLUMNS = app.targetCell.x + 1;
+    var ROWS = 4;
+    var COLUMNS = 6;
     for (let index = 0; index < ROWS; index++) {
       var row = document.createElement("div");
       row.className = "row";
@@ -133,6 +133,7 @@ var app = {
       gameOver: false,
       counter: 0,
     };
+    document.location.reload()
     app.redrawBoard(app.directionDown);
   },
   listenButtonClick: () => {
